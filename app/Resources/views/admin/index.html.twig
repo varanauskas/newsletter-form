@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Subscriptions{% endblock %}
+
+{% block header %}
+<style>
+    table {
+        width: 100%;
+    }
+    tbody tr:nth-child(even) { background: #DDD; }
+</style>
+{% endblock %}
+
+{% block body %}
+    <h1>Subscriptions</h1>
+    <a href="{{ path('logout') }}">Logout</a>
+    {% for message in app.flashes('success') %}
+        <div class="success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <table>
+        <thead>
+            <tr>
+                <th><a href="{{ path('admin', { 'sortBy': 'name', 'order': (order < 0 ? 'ascending' : 'descending') }) }}">Name {{ sortBy == 'name' ? order < 0 ? '&#9660;' : '&#9650;' }}</a></th>
+                <th><a href="{{ path('admin', { 'sortBy': 'email', 'order': (order < 0 ? 'ascending' : 'descending') }) }}">Email {{ sortBy == 'email' ? order < 0 ? '&#9660;' : '&#9650;' }}</a></th>
+                <th><a href="{{ path('admin', { 'sortBy': 'created', 'order': (order < 0 ? 'ascending' : 'descending') }) }}">Date {{ sortBy == 'created' ? order < 0 ? '&#9660;' : '&#9650;' }}</a></th>
+                <th>Action</th>
+                <th>Categories</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subscription in subscriptions %}
+                <tr>
+                    <td>{{ subscription.name }}</td>
+                    <td>{{ subscription.email }}</td>
+                    <td>{{ subscription.created|date }}</td>
+                    <td>
+                        <a href="{{ path('admin_delete', { 'id': subscription.id }) }}" onclick="return confirm('Are you sure you want to delete this subscription?')">Delete</a>
+                        <a href="{{ path('admin_edit', { 'id': subscription.id }) }}">Edit</a>
+                    </td>
+                    <td>
+                        <ul>
+                            {% for category in subscription.categories %}
+                                <li>{{ category.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

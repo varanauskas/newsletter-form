@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block header %}
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .error {
+            background-color: rgb(255, 146, 146);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% if error %}
+        <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+    
+        <h1>Login</h1>
+        <form action="{{ path('login') }}" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+    
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password" />
+    
+            <button type="submit">Login</button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+<style>
+    body {
+        text-align: center;
+    }
+
+    .container {
+        width: 512px;
+        margin: 0 auto;
+    }
+    
+    form ul li {
+        background-color: rgb(255, 146, 146);
+        padding: 1rem 0;
+        margin-bottom: 2rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% for message in app.flashes('success') %}
+            <div class="success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h1>Subscribe to our newsletter!</h1>
+    
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
